@@ -11,7 +11,7 @@
 </head>
 <body>
     <!--add attribute "stats" to a-scene to see fps and stuff-->
-    <a-scene environment="preset: starry; ground: none;" vr-mode-ui="enabled: true">
+    <a-scene stats environment="preset: starry; ground: none;" vr-mode-ui="enabled: true">
         <a-assets>
             <a-asset-item id="taller_to_thinner" src="textures/skyscrapers/taller_to_thinner.glb"></a-asset-item>
             <a-asset-item id="thick_wide" src="textures/skyscrapers/thick_wide.glb"></a-asset-item>
@@ -20,10 +20,16 @@
 
             <a-asset-item id="street_lamp_model" src="textures/light/city_streetlight_2.glb"></a-asset-item>
             <a-asset-item id="car_model" src="textures/car/cyberpunk_car.glb"></a-asset-item>
-            <a-asset-item id="house_model" src="textures/custom_built_house_w_tex.glb"></a-asset-item>
+
+            <a-asset-item id="park_model" src="textures/park/park.glb"></a-asset-item>
+
             <img id="pavement_normal" src="textures/pavement_normal.jpg">
         </a-assets>
-        <a-camera id="player_camera" wasd-controls="acceleration: 30" rotation="-19.481 44.232 0" position="0.152 1.6 130"></a-camera>
+        <!--genius names-->
+        <a-sphere id="moon" position="0 150 36.41625"></a-sphere>
+        <a-light id="moonlight" type="ambient" color="#ffffff" intensity="0.1"></a-light>
+
+        <a-camera id="player_camera" wasd-controls="acceleration: 30" rotation="-19.481 44.232 0" position="10 1.6 130"></a-camera>
         <a-sky color="black"></a-sky>
         <a-plane id="floor" material="color: #1f1f1f; emissive: #000000; roughness: 1" geometry="height: 270; width: 270" position="0 0.17803 0" rotation="-90 0 0"></a-plane>
         <a-entity id="road_part1" position="-4 0 0">
@@ -48,9 +54,10 @@
             <a-box 
                 id="pavement_right" 
                 geometry="height: 0.8; depth: 90; width: 6" 
-                position="13.97212 0.15045 0"
-                repeat="2 30"
+                position="13.972 0.15 0"
                 src="textures/pavement_base.jpg"
+                repeat="2 30"
+                scale="1 1"
                 normal-map="#pavement_normal"
                 normal-texture-repeat="2 30"
                 normal-scale="1 1"
@@ -95,13 +102,14 @@
                     </a-entity>
                 </a-entity>
             </a-box>
+            
             <a-box 
                 id="pavement_left" 
                 geometry="height: 0.8; depth: 90; width: 6" 
                 position="-5.97212 0.15045 0"
+                src="textures/pavement_base.jpg"
                 repeat="2 30"
                 scale="1 1"
-                src="textures/pavement_base.jpg"
                 normal-map="#pavement_normal"
                 normal-texture-repeat="2 30"
                 normal-scale="1 1"
@@ -149,8 +157,8 @@
         </a-entity>
         <a-entity id="road_part2" position="-4 0 90">
             <a-box 
-                id="road" position="0 0.087 0" 
-                material="color: #ffffff" 
+            id="road" position="0 0.087 0" 
+            material="color: #ffffff" 
                 geometry="depth: 90; height: 0.5; width: 8"
                 src="textures/cracked_road.jpg"
                 repeat="1 12"
@@ -170,8 +178,9 @@
                 id="pavement_right" 
                 geometry="height: 0.8; depth: 90; width: 6" 
                 position="13.97212 0.15045 0"
-                repeat="2 30"
                 src="textures/pavement_base.jpg"
+                repeat="2 30"
+                scale="1 1"
                 normal-map="#pavement_normal"
                 normal-texture-repeat="2 30"
                 normal-scale="1 1"
@@ -217,12 +226,64 @@
                 </a-entity>
             </a-box>
             <a-box 
+                id="pavement_right-2" rotation="0 -90 0" 
+                geometry="height: 0.8; depth: 90; width: 6" 
+                position="61.97 0.15045 6.23931"
+                src="textures/pavement_base.jpg"
+                repeat="2 30"
+                scale="1 1"
+                normal-map="#pavement_normal"
+                normal-texture-repeat="2 30"
+                normal-scale="1 1"
+                roughness="0.8"
+                >
+                <a-entity id="lamps_right" position="0 0 2.07703" rotation="0 180 0">
+                    <a-entity
+                        id="lamp4" rotation="0 180 0" position="-0.3 0.357 0"
+                        scale="0.008 0.008 0.008"
+                        gltf-model="#street_lamp_model"
+                        >
+                        <a-light 
+                            id="lamp_light4" rotation="-90 0 0" light="type: spot; intensity: 0.3; shadowRadius: 1; angle: 40; decay: 1; distance: 0; shadowBias: 0; shadowCameraVisible: false" position="-85 1346 -130"
+                            intensity="0.2"
+                            type="directional"
+                            >
+                        </a-light>
+                    </a-entity>
+                    <a-entity
+                        id="lamp5" rotation="0 180 0" position="-0.3 0.357 30"
+                        scale="0.008 0.008 0.008"
+                        gltf-model="#street_lamp_model"
+                        >
+                        <a-light 
+                            id="lamp_light5" rotation="-90 0 0" position="-85 1346 -130" light="type: spot; intensity: 0.3; angle: 40"
+                            intensity="0.2"
+                            type="directional"
+                            >
+                        </a-light>
+                    </a-entity>
+                    <a-entity
+                        id="lamp6" rotation="0 180 0" position="-0.3 0.357 -30"
+                        scale="0.008 0.008 0.008"
+                        gltf-model="#street_lamp_model"
+                        >
+                        <a-light 
+                            id="lamp_light6" rotation="-90 0 0" position="-85 1346 -130" light="type: spot; shadowBias: 0; penumbra: 0; intensity: 0.3; angle: 40"
+                            intensity="0.2"
+                            type="directional"
+                            >
+                        </a-light>
+                    </a-entity>
+                </a-entity>
+            </a-box>
+
+            <a-box 
                 id="pavement_left" 
                 geometry="height: 0.8; depth: 90; width: 6" 
                 position="-5.97212 0.15045 0"
+                src="textures/pavement_base.jpg"
                 repeat="2 30"
                 scale="1 1"
-                src="textures/pavement_base.jpg"
                 normal-map="#pavement_normal"
                 normal-texture-repeat="2 30"
                 normal-scale="1 1"
@@ -267,6 +328,57 @@
                     </a-entity>
                 </a-entity>
             </a-box>
+            <a-box 
+                id="pavement_left-2" rotation="0 -90 0" 
+                geometry="height: 0.8; depth: 90; width: 6" 
+                position="-53.95654 0.15045 6.239"
+                src="textures/pavement_base.jpg"
+                repeat="2 30"
+                scale="1 1"
+                normal-map="#pavement_normal"
+                normal-texture-repeat="2 30"
+                normal-scale="1 1"
+                roughness="0.8"
+                >
+                <a-entity id="lamps_right" position="0 0 2.07703" rotation="0 180 0">
+                    <a-entity
+                        id="lamp4" rotation="0 180 0" position="-0.3 0.357 0"
+                        scale="0.008 0.008 0.008"
+                        gltf-model="#street_lamp_model"
+                        >
+                        <a-light 
+                            id="lamp_light4" rotation="-90 0 0" light="type: spot; intensity: 0.3; shadowRadius: 1; angle: 40; decay: 1; distance: 0; shadowBias: 0; shadowCameraVisible: false" position="-85 1346 -130"
+                            intensity="0.2"
+                            type="directional"
+                            >
+                        </a-light>
+                    </a-entity>
+                    <a-entity
+                        id="lamp5" rotation="0 180 0" position="-0.3 0.357 30"
+                        scale="0.008 0.008 0.008"
+                        gltf-model="#street_lamp_model"
+                        >
+                        <a-light 
+                            id="lamp_light5" rotation="-90 0 0" position="-85 1346 -130" light="type: spot; intensity: 0.3; angle: 40"
+                            intensity="0.2"
+                            type="directional"
+                            >
+                        </a-light>
+                    </a-entity>
+                    <a-entity
+                        id="lamp6" rotation="0 180 0" position="-0.3 0.357 -30"
+                        scale="0.008 0.008 0.008"
+                        gltf-model="#street_lamp_model"
+                        >
+                        <a-light 
+                            id="lamp_light6" rotation="-90 0 0" position="-85 1346 -130" light="type: spot; shadowBias: 0; penumbra: 0; intensity: 0.3; angle: 40"
+                            intensity="0.2"
+                            type="directional"
+                            >
+                        </a-light>
+                    </a-entity>
+                </a-entity>
+            </a-box>
         </a-entity>
         <a-entity id="road_part3" position="-4 0 -90">
             <a-box 
@@ -291,8 +403,9 @@
                 id="pavement_right" 
                 geometry="height: 0.8; depth: 90; width: 6" 
                 position="13.97212 0.15045 0"
-                repeat="2 30"
                 src="textures/pavement_base.jpg"
+                repeat="2 30"
+                scale="1 1"
                 normal-map="#pavement_normal"
                 normal-texture-repeat="2 30"
                 normal-scale="1 1"
@@ -341,9 +454,9 @@
                 id="pavement_left" 
                 geometry="height: 0.8; depth: 90; width: 6" 
                 position="-5.97212 0.15045 0"
+                src="textures/pavement_base.jpg"
                 repeat="2 30"
                 scale="1 1"
-                src="textures/pavement_base.jpg"
                 normal-map="#pavement_normal"
                 normal-texture-repeat="2 30"
                 normal-scale="1 1"
@@ -393,28 +506,65 @@
         
 
         <!-- animation__drive="property: position; dur: 8000; easing: linear; loop: -1; from: -1.535 0.344 -42.28; to: -1.535 0.344 42.28" -->
-        <a-entity id="car1" rotation="0 180 0" position="-5.535 0.344 -42.28" scale="0.01 0.01 0.01" gltf-model="#car_model"
-      
+        <a-entity id="car1" rotation="0 180 0" position="-5.5 0.344 -132" scale="0.01 0.01 0.01" gltf-model="#car_model"
+        animation__drive="property: position; dur: 9000; easing: linear; loop: -1; from: -5.5 0.344 -132; to: -5.5 0.344 132"
+            >
+        </a-entity>
+        <a-entity id="car1-2" rotation="0 180 0" position="-2.4 0.344 -132" scale="0.01 0.01 0.01" gltf-model="#car_model"
+        animation__drive="property: position; dur: 15000; easing: linear; loop: -1; from: -2.4 0.344 -132; to: -2.4 0.344 132"
             >
         </a-entity>
       
         <!-- animation__drive="property: position; dur: 8000; easing: linear; loop: -1; from: 1.535 0.344 42.28; to: 1.535 0.344 -42.28" -->
-        <a-entity id="car2" position="5.535 0.344 42.28" scale="0.01 0.01 0.01" gltf-model="#car_model"
-      
+        <a-entity id="car2" position="5.5 0.344 132" scale="0.01 0.01 0.01" gltf-model="#car_model"
+        animation__drive="property: position; dur: 17000; easing: linear; loop: -1; from: 5.5 0.344 132; to: 5.5 0.344 -132"
+            >
+        </a-entity>
+        <a-entity id="car2-2" position="2.39999 0.344 132" scale="0.01 0.01 0.01" gltf-model="#car_model"
+        animation__drive="property: position; dur: 20000; easing: linear; loop: -1; from: 2.4 0.344 132; to: 2.4 0.344 -132"
             >
         </a-entity>
 
-        <a-entity id="skyscrapers_left" position="-1.01266 0 0">
-            <a-entity id="skyleft1" position="-20 0 85" scale="0.5 0.5 0.5" gltf-model="#taller_to_thinner"></a-entity>
-            <a-entity id="skyleft2" position="-20 0 62" scale="0.5 0.5 0.5" gltf-model="#spiral"></a-entity>
-            <a-entity id="skyleft3" rotation="0 90 0" position="-20 0 117" scale="0.5 0.5 0.5" gltf-model="#thick_wide"></a-entity>
-            <a-entity id="skyleft4" rotation="0 90 0" scale="0.5 0.5 0.5" position="-20 0 30" gltf-model="#big_view"></a-entity>
+        <a-entity id="skyscrapers_left" position="-1.013 0 0">
+            <a-entity id="pair1left" position="-2.4 0 0">
+                <a-entity id="skyleft1" position="-66 0 107.39999" scale="0.5 0.5 0.5" gltf-model="#taller_to_thinner"></a-entity>
+                <a-entity id="skyleft1-2" position="-20 0 85" scale="0.5 0.5 0.5" gltf-model="#taller_to_thinner"></a-entity>
+                <a-entity id="skyleft2" position="-20 0 62" scale="0.5 0.5 0.5" gltf-model="#spiral"></a-entity>
+                <a-entity id="skyleft2-2" position="-42 0 107.29462" scale="0.5 0.5 0.5" gltf-model="#spiral"></a-entity>
+                <a-entity id="skyleft3" rotation="0 90 0" position="-20 0 117" scale="0.5 0.5 0.5" gltf-model="#thick_wide"></a-entity>
+                <a-entity id="skyleft4" rotation="0 90 0" scale="0.5 0.5 0.5" position="-20 0 30" gltf-model="#big_view"></a-entity>
+                <a-entity id="skyleft4-2" rotation="0 0 0" scale="0.5 0.5 0.5" position="-52 0 83.11156" gltf-model="#big_view"></a-entity>
+            </a-entity>
+            <a-entity id="pair2left" position="-2.4 0 -127">
+                <a-entity id="skyleft1" position="-20 0 85" scale="0.5 0.5 0.5" gltf-model="#taller_to_thinner"></a-entity>
+                <a-entity id="skyleft2" position="-20 0 62" scale="0.5 0.5 0.5" gltf-model="#spiral"></a-entity>
+                <a-entity id="skyleft3" rotation="0 90 0" position="-20 0 117" scale="0.5 0.5 0.5" gltf-model="#thick_wide"></a-entity>
+                <a-entity id="skyleft4" rotation="0 90 0" scale="0.5 0.5 0.5" position="-20 0 30" gltf-model="#big_view"></a-entity>
+            </a-entity>
         </a-entity>
-        <a-entity id="skyscrapers_right" position="0 0 188.97374" rotation="0 180 0">
-            <a-entity id="skyright1" position="-20 0 85" scale="0.5 0.5 0.5" gltf-model="#taller_to_thinner"></a-entity>
-            <a-entity id="skyright2" position="-20 0 62" scale="0.5 0.5 0.5" gltf-model="#spiral"></a-entity>
-            <a-entity id="skyright3" rotation="0 90 0" position="-20 0 117" scale="0.5 0.5 0.5" gltf-model="#thick_wide"></a-entity>
+        <a-entity id="skyscrapers_right" position="0 0 147.17571" rotation="0 180 0">
+            <a-entity id="pair1right" position="-2.4 0 0">
+                <a-entity id="skyright1" position="-20 0 85" scale="0.5 0.5 0.5" gltf-model="#taller_to_thinner"></a-entity>
+                <a-entity id="skyright1-2" position="-42 0 39.05188" scale="0.5 0.5 0.5" gltf-model="#taller_to_thinner"></a-entity>
+                <a-entity id="skyright1-3" position="-64 0 39.05188" scale="0.5 0.5 0.5" gltf-model="#taller_to_thinner"></a-entity>
+                <a-entity id="skyright2" position="-20 0 62" scale="0.5 0.5 0.5" gltf-model="#spiral"></a-entity>
+                <a-entity id="skyright3" rotation="0 90 0" position="-20 0 117" scale="0.5 0.5 0.5" gltf-model="#thick_wide"></a-entity>
+                <a-entity id="skyright3-2" rotation="0 0 0" position="-50 0 62.5" scale="0.5 0.5 0.5" gltf-model="#thick_wide"></a-entity>
+                <a-entity id="skyright4" rotation="0 90 0" scale="0.5 0.5 0.5" position="-20 0 30" gltf-model="#big_view"></a-entity>
+            </a-entity>
+            <a-entity id="pair2right" position="-2.4 0 127">
+                <a-entity id="skyright1" position="-20 0 85" scale="0.5 0.5 0.5" gltf-model="#taller_to_thinner"></a-entity>
+                <a-entity id="skyright2" position="-20 0 62" scale="0.5 0.5 0.5" gltf-model="#spiral"></a-entity>
+                <a-entity id="skyright3" rotation="0 90 0" position="-20 0 117" scale="0.5 0.5 0.5" gltf-model="#thick_wide"></a-entity>
+                <a-entity id="skyright4" rotation="0 90 0" scale="0.5 0.5 0.5" position="-20 0 30" gltf-model="#big_view"></a-entity>
+            </a-entity>
         </a-entity>
+        <a-entity id="park_right" position="86.9761 0 63.42165" rotation="0 -90 0" scale="0.5 0.5 0.5"
+            gltf-model="#park_model"
+            >
+        </a-entity>
+        <a-box id="coming_soon_sign" rotation="0 90 0" scale="4.111 1.299 1" position="-89.164 1.579 96.245" src="textures/coming_soon.png"></a-box>
+        <a-box id="coming_soon_sign-2" rotation="-0.5614986392282068 90 0.004583662361046586" scale="4.111 4.299 1" position="90.23854 1.57926 96.13976" src="textures/coming_soon.png"></a-box>
     </a-scene>
 </body>
 </html>
